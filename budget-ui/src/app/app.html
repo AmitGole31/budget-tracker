@@ -1,0 +1,21 @@
+<div class="app-container">
+  <header class="app-header">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <h1>💰 BudgetTracker</h1>
+      </div>
+      <div class="nav-links">
+        <a routerLink="/" class="nav-link" routerLinkActive="active">Expense List</a>
+        <a routerLink="/add" class="nav-link" routerLinkActive="active">Add Expense</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2024 BudgetTracker. All rights reserved.</p>
+  </footer>
+</div>

@@ -1,0 +1,61 @@
+<div class="expense-list-container">
+  <h2>Expense History</h2>
+  
+  <div *ngIf="expenses.length === 0" class="no-expenses">
+    <p>No expenses recorded yet.</p>
+  </div>
+
+  <div *ngIf="expenses.length > 0" class="expenses-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Display mode -->
+        <tr *ngFor="let expense of expenses" [class.editing]="isEditing(expense.id)">
+          <td>
+            <span *ngIf="!isEditing(expense.id)">{{ expense.title }}</span>
+            <input *ngIf="isEditing(expense.id)" [(ngModel)]="editingExpense.title" class="edit-input">
+          </td>
+          <td class="amount">
+            <span *ngIf="!isEditing(expense.id)">${{ expense.amount | number:'1.2-2' }}</span>
+            <input *ngIf="isEditing(expense.id)" type="number" [(ngModel)]="editingExpense.amount" class="edit-input">
+          </td>
+          <td>
+            <span *ngIf="!isEditing(expense.id)" class="category-tag">{{ expense.category }}</span>
+            <select *ngIf="isEditing(expense.id)" [(ngModel)]="editingExpense.category" class="edit-input">
+              <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
+            </select>
+          </td>
+          <td>
+            <span *ngIf="!isEditing(expense.id)">{{ expense.date | date:'MMM dd, yyyy' }}</span>
+            <input *ngIf="isEditing(expense.id)" type="date" [(ngModel)]="editingExpense.date" class="edit-input">
+          </td>
+          <td class="description">
+            <span *ngIf="!isEditing(expense.id)">{{ expense.description || '-' }}</span>
+            <input *ngIf="isEditing(expense.id)" [(ngModel)]="editingExpense.description" class="edit-input">
+          </td>
+          <td class="actions">
+            <!-- View mode buttons -->
+            <div *ngIf="!isEditing(expense.id)">
+              <button class="btn-edit" (click)="startEdit(expense)">Edit</button>
+              <button class="btn-delete" (click)="deleteExpense(expense.id || 0)">Delete</button>
+            </div>
+            <!-- Edit mode buttons -->
+            <div *ngIf="isEditing(expense.id)">
+              <button class="btn-save" (click)="saveEdit()">Save</button>
+              <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
